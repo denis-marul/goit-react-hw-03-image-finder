@@ -12,7 +12,7 @@ export class App extends Component {
     photos: [],
     loading: false,
     error: null,
-   
+    showBtn: false,
   }
   
   componentDidUpdate(prevProps, prevState) {
@@ -22,12 +22,12 @@ export class App extends Component {
 
       setTimeout(() => {
          fetchPhotos(this.state.photoText, this.state.page)
-            .then(images => this.setState(prevState => ({ photos: [...prevState.photos, ...images.hits] })))
+            .then(images => this.setState(prevState => ({ photos: [...prevState.photos, ...images.hits], showBtn: this.state.page < Math.ceil(images.totalHits/12)})))
             .catch(error => this.setState({ error }))
             .finally(() => this.setState({ loading: false })); 
       }, 1000);
       
-         
+         console.log(this.state);
     }  
     }
 
@@ -60,7 +60,7 @@ export class App extends Component {
         images={this.state.photos}
         />
         <Loader loading={this.state.loading}/>
-        <Button photos={this.state.photos} click={this.onMore} />
+        <Button showBtn={this.state.showBtn} photos={this.state.photos} click={this.onMore} />
     </div>
   );
   }
