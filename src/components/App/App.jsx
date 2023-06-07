@@ -20,14 +20,13 @@ export class App extends Component {
 
       this.setState({ loading: true })
 
-      setTimeout(() => {
          fetchPhotos(this.state.photoText, this.state.page)
-            .then(images => this.setState(prevState => ({ photos: [...prevState.photos, ...images.hits], showBtn: this.state.page < Math.ceil(images.totalHits/12)})))
+           .then(images => this.setState(prevState => ({
+             photos: [...prevState.photos, ...images.hits],
+             showBtn: this.state.page < Math.ceil(images.totalHits / 12)
+           })))
             .catch(error => this.setState({ error }))
-            .finally(() => this.setState({ loading: false })); 
-      }, 1000);
-      
-         console.log(this.state);
+            .finally(() => this.setState({ loading: false }));     
     }  
     }
 
